@@ -1,0 +1,20 @@
+services:
+  web:
+#    build: .
+    build:
+      context: . # the root of folder of your application, usually on the same location of the docker-compose.yml
+      dockerfile: Dockerfile.dev # -f in docker run param
+    ports: # -p 3000:3000 in docker run param
+      - 3000:3000
+    volumes: # -v /app/node_modules -v "$(pwd):/app" in docker run param
+      - /app/node_modules # to set which data that we dont want to replace
+      - .:/app # replace all data from container except /app/node_modules by data from our local
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
+

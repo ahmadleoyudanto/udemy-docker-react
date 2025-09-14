@@ -1,3 +1,5 @@
+# only work if you select the plan in your account, and it require credit card
+# we can use github action instead
 sudo: required
 services:
   - docker # to get copy of docker image
@@ -7,3 +9,16 @@ before_install:
 
 script:
   - docker run -e CI=true alkinemokiye/docker-react npm run test -- --coverage --watchAll=false --detectOpenHandles
+
+# only work if you have aws account and have selecteed plan, and it required credit card
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-west-2-306476627547"
+  bucket_path: "docker"
+  on:
+    branch:
+      main
+
