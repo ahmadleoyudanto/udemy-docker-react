@@ -7,8 +7,8 @@ services:
     ports: # -p 3000:3000 in docker run param
       - 3000:3000
     volumes: # -v /app/node_modules -v "$(pwd):/app" in docker run param
-      - /app/node_modules
-      - .:/app
+      - /app/node_modules # to set which data that we dont want to replace
+      - .:/app # replace all data from container except /app/node_modules by data from our local
   test:
     build:
       context: .
